@@ -1,0 +1,110 @@
+[
+    {
+      "id": 1,
+      "name": "01-房屋及建筑物",
+      "open": true,
+      "children": [
+
+      ],
+      "checked": false
+    },
+    {
+      "id": 4,
+      "name": "02-办公设备",
+      "open": false,
+      "children": [
+        {
+          "id": 5,
+          "name": "021-办公家具",
+          "open": false,
+          "checked": false
+        },
+        {
+          "id": 6,
+          "name": "022-空调",
+          "open": false,
+          "checked": false
+        },
+        {
+          "id": 333,
+          "name": "023-电视机",
+          "open": false,
+          "checked": false
+        },
+        {
+          "id": 334,
+          "name": "024-弱电系统",
+          "open": false,
+          "checked": false
+        }
+      ],
+      "checked": false
+    },
+  {
+    "id": 7,
+    "name": "03-仪器设备",
+    "open": false,
+    "children": [
+      {
+        "id": 8,
+        "name": "031-测绘仪器",
+        "open": false,
+        "checked": false
+      },
+      {
+        "id": 9,
+        "name": "032-勘测设备",
+        "open": false,
+        "checked": false
+      }
+    ],
+    "checked": false
+  },
+  {
+    "id": 11,
+    "name": "04-交通工具",
+    "open": false,
+    "children": [
+
+    ],
+    "checked": false
+  },
+  {
+    "id": 15,
+    "name": "05-电子设备",
+    "open": false,
+    "children": [
+      {
+        "id": 16,
+        "name": "051-电脑",
+        "open": false,
+        "checked": false
+      },
+      {
+        "id": 17,
+        "name": "052-打印机",
+        "open": false,
+        "checked": false
+      },
+      {
+        "id": 18,
+        "name": "053-办公电子类",
+        "open": false,
+        "checked": false
+      },
+      {
+        "id": 19,
+        "name": "054-监控系统",
+        "open": false,
+        "checked": false
+      },
+      {
+        "id": 20,
+        "name": "055-系统集成",
+        "open": false,
+        "checked": false
+      }
+    ],
+    "checked": false
+  }
+  ]

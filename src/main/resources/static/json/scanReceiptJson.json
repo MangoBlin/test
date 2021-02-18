@@ -1,0 +1,63 @@
+{
+  "words_result": {
+    "AmountInWords": "贰仟捌佰捌拾陆元叁角伍分",
+    "CommodityPrice": [{
+      "row": "1",
+      "word": "20191226"
+    }],
+    "NoteDrawer": "何小青",
+    "SellerAddress": "郑州市航空港区明星路以南舜华路以西0371-65793300",
+    "CommodityNum": [],
+    "SellerRegisterNum": "9141010055833160XE",
+    "MachineCode": "499099653321",
+    "Remarks": "汇总开具",
+    "SellerBank": "兴业郑商支462100100100016067",
+    "CommodityTaxRate": [{
+      "row": "1",
+      "word": "不征税"
+    }],
+    "TotalTax": "***",
+    "CheckCode": "03303034057365723724",
+    "InvoiceCode": "041001800112",
+    "InvoiceDate": "2020年12月07日",
+    "PurchaserRegisterNum": "914101054158051427",
+    "InvoiceTypeOrg": "河南增值税电子普通发票",
+    "Password": "0319294+97>4*/53*5-7++13>609384312+/3<-*9*612889/*>-<8-0*5>--/9<7*2--913/2-4011>73-60495-30882017>+<1942*>3>6362",
+    "Agent": "否",
+    "AmountInFiguers": "2886.35",
+    "PurchaserBank": "上海浦东发展银行郑州分行花园路支行76110154800000688",
+    "Checker": "胡静璞",
+    "City": "",
+    "TotalAmount": "2886.35",
+    "CommodityAmount": [{
+      "row": "1",
+      "word": "2886.35"
+    }],
+    "PurchaserName": "河南省水利勘测有限公司",
+    "CommodityType": [{
+      "row": "1",
+      "word": "豫A6K278"
+    }],
+    "Province": "",
+    "InvoiceType": "电子普通发票",
+    "SheetNum": "",
+    "PurchaserAddress": "郑州市黄河路7号0371-65351169",
+    "CommodityTax": [{
+      "row": "1",
+      "word": "***"
+    }],
+    "CommodityUnit": [{
+      "row": "1",
+      "word": "客车"
+    }],
+    "Payee": "王小丽",
+    "CommodityName": [{
+      "row": "1",
+      "word": "*经营租赁*代收通行费"
+    }],
+    "SellerName": "河南省视博电子股份有限公司",
+    "InvoiceNum": "13848441"
+  },
+  "log_id": 1349645919523438592,
+  "words_result_num": 36
+}

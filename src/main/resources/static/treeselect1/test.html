@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>树形下拉选择器</title>
+    <script src="../lib/jquery-3.4.1/jquery-3.4.1.js" type="text/javascript" charset="UTF-8"></script>
+    <link rel="stylesheet" href="../treeselect1/assets/layui/css/layui.css">
+    <script src="../treeselect1/assets/layui/layui.js"></script>
+    <script src="../treeselect1/module/common.js"></script>
+    <style wjw>
+
+    </style>
+
+</head>
+<body style="padding: 25px;">
+<div  class="layui-container layui-form">
+    <div class="layui-form-item">
+        <label  class="layui-form-label">测试</label>
+        <div class="layui-input-block">
+            <button id="aaaa">ett</button>
+            <input type="text" id="tree" lay-filter="tree1" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label for="" class="layui-form-label">测试2</label>
+        <div class="layui-input-block">
+            <input type="text" id="tree2" lay-filter="tree2" class="layui-input">
+        </div>
+    </div>
+</div>
+
+<script>
+
+    layui.use(['treeSelect','form','layer'], function () {
+        var treeSelect= layui.treeSelect;
+        $ = layui.jquery;
+        layer = layui.layer;
+
+        treeSelect.render({
+            // 选择器
+            elem: '#tree',
+            // 数据
+            data: './data/data4.json',
+            // 请求头
+            headers: {},
+            // 异步加载方式：get/post，默认get
+            type: 'get',
+            // 占位符
+            placeholder: '修改默认提示信息',
+            // 是否开启搜索功能：true/false，默认false
+            search: true,
+            // 点击回调
+            click: function(d){
+                console.log(d.current.name);
+            },
+            success: function (d) {
+                console.log(d);
+                treeSelect.checkNode('tree1', 5);
+            }
+        });
+
+        console.log($("#tree").val());
+
+        $("#aaaa").click(function () {
+            console.log($("#tree").val());
+            treeSelect.checkNode('tree1', 5);
+            // $("#tree").text("");
+            // treeSelect.revokeNode('tree1', function(d){
+            //     console.log(d);
+            //     console.log(d.treeId);
+            // });
+
+            console.log($("#tree").val());
+        });
+    });
+</script>
+</body>
+</html>

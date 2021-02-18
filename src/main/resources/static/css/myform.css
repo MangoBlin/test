@@ -1,0 +1,47 @@
+.myform1{
+  /* width: 300px; */
+  font-size: xx-small;
+  margin-top: 5px;
+  margin-bottom: 0px;
+  padding: 0;
+}
+
+.myform1 label{
+  margin-top: 8px;
+  margin-left: 0px;
+  margin-right: 5px;
+  width: 70px;
+  padding: 2px;
+}
+
+.myform1 input[type='radio']{
+  width: 30px;
+  display: inline;
+}
+
+.mybutton1{
+  font-size: small;
+}
+
+.radioItem{
+  padding-right: 5px;
+}
+
+.radioItemLast{
+  padding-right: 0px;
+}
+
+.layui-table-page {
+  text-align: center;
+}
+
+.layui-table-box {
+  margin-bottom: 30px;
+}
+
+.myformitem{
+  margin-bottom: 0px;
+  margin-top: -5px;
+}
+
+

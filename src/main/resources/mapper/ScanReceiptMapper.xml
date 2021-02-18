@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hbw.springbootapplication.mapper.ScanReceiptMapper">
+    <resultMap id="receiptResultMap" type="Receipt">
+        <result property="id" column="id"/>
+        <result property="receiptCode" column="receipt_code"/>
+        <result property="receiptNum" column="receipt_num"/>
+        <result property="sellerUnitName" column="seller_unit_name"/>
+        <result property="receiptTime" column="receipt_time"/>
+        <result property="receiptCategory" column="receipt_category"/>
+        <result property="receiptContent" column="receipt_content"/>
+        <result property="money" column="money"/>
+        <result property="rate" column="rate"/>
+        <result property="tax" column="tax"/>
+        <result property="submitAccountStaff" column="submitaccount_staff"/>
+        <result property="entryTime" column="entry_time"/>
+        <result property="remarks" column="comments"/>
+        <result property="compProj" column="comp_proj"/>
+        <result property="department" column="department"/>
+        <result property="isCertification" column="is_certification"/>
+        <result property="certificationTime" column="certification_time"/>
+        <result property="checkDigit" column="check_digit"/>
+        <result property="leviedTotal" column="levied_total"/>
+        <result property="receiptType" column="receipt_type"/>
+        <result property="fixedAssets" column="fixed_assets"/>
+        <result property="voucherNum" column="voucher_num"/>
+        <result property="isHandle" column="is_handle"/>
+        <result property="errorCode" column="error_code"/>
+    </resultMap>
+
+    <sql id="receiptCommon">
+        id,receipt_code,receipt_num,seller_unit_name,receipt_time,receipt_category,
+        receipt_content,money,rate,tax,submitaccount_staff,entry_time,comments,comp_proj,
+        department,is_certification,certification_time,check_digit,levied_total,
+        receipt_type,fixed_assets,voucher_num,is_handle,error_code
+    </sql>
+
+    <insert id="scanAddReceipt" parameterType="Receipt">
+        INSERT INTO receipt(
+        receipt_code,
+        receipt_num,
+        seller_unit_name,
+        receipt_time,
+        receipt_category,
+        receipt_content,
+        money,
+        rate,
+        tax,
+        submitaccount_staff,
+        entry_time,
+        comments,
+        comp_proj,
+        department,
+        is_certification,
+        certification_time,
+        check_digit,
+        levied_total,
+        receipt_type,
+        is_handle,
+        error_code
+        )
+        VALUES (
+        #{receipt.receiptCode},
+        #{receipt.receiptNum},
+        #{receipt.sellerUnitName},
+        #{receipt.receiptTime},
+        #{receipt.receiptCategory},
+        #{receipt.receiptContent},
+        #{receipt.money},
+        #{receipt.rate},
+        #{receipt.tax},
+        #{receipt.submitAccountStaff},
+        #{receipt.entryTime},
+        #{receipt.remarks},
+        #{receipt.compProj},
+        #{receipt.department},
+        #{receipt.isCertification},
+        #{receipt.certificationTime},
+        #{receipt.checkDigit},
+        #{receipt.leviedTotal},
+        #{receipt.receiptType},
+        '0',
+        #{receipt.errorCode}
+        )
+    </insert>
+
+    <select id="scanCountByRecNum" parameterType="Receipt" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM
+        receipt
+        WHERE
+        receipt_num=#{receipt.receiptNum}
+        AND is_handle='1'
+    </select>
+
+    <select id="scanCountByRecNumNohandler" parameterType="Receipt" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM
+        receipt
+        WHERE
+        receipt_num=#{receipt.receiptNum}
+        AND is_handle='0'
+    </select>
+
+    <select id="countScanReceiptNum" resultType="java.lang.Integer">
+        SELECT COUNT(1)
+        FROM
+        receipt
+        WHERE
+        is_handle='0'
+    </select>
+
+    <select id="selectScanReceipts" resultMap="receiptResultMap">
+        SELECT
+        <include refid="receiptCommon"/>
+        FROM
+        receipt
+        WHERE is_handle='0'
+    </select>
+
+    <select id="selectScanReceiptsByRecNum" resultMap="receiptResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="receiptCommon"/>
+        FROM
+        receipt
+        WHERE is_handle='0'
+        AND receipt_num=#{receiptNum}
+    </select>
+
+    <update id="updateScanReceipt" parameterType="Receipt">
+        UPDATE
+        receipt
+        <set>
+            <if test="receipt.receiptCode!=null and receipt.receiptCode!='' ">
+                receipt_code=#{receipt.receiptCode},
+            </if>
+            <if test="receipt.receiptNum!=null and receipt.receiptNum!='' ">
+                receipt_num=#{receipt.receiptNum},
+            </if>
+            <if test="receipt.sellerUnitName!=null and receipt.sellerUnitName!='' ">
+                seller_unit_name=#{receipt.sellerUnitName},
+            </if>
+            <if test="receipt.receiptTime!=null">
+                receipt_time=#{receipt.receiptTime},
+            </if>
+            <if test="receipt.receiptCategory!=null and receipt.receiptCategory!='' ">
+                receipt_category=#{receipt.receiptCategory},
+            </if>
+            <if test="receipt.receiptContent!=null and receipt.receiptContent!='' ">
+                receipt_content=#{receipt.receiptContent},
+            </if>
+            <if test="receipt.money!=null and receipt.money!='' ">
+                money=#{receipt.money},
+            </if>
+            <if test="receipt.rate!=null and receipt.rate!='' ">
+                rate=#{receipt.rate},
+            </if>
+            <if test="receipt.tax!=null and receipt.tax!='' ">
+                tax=#{receipt.tax},
+            </if>
+            <if test="receipt.submitAccountStaff!=null and receipt.submitAccountStaff!='' ">
+                submitaccount_staff=#{receipt.submitAccountStaff},
+            </if>
+            <if test="receipt.entryTime!=null">
+                entry_time=#{receipt.entryTime},
+            </if>
+            <if test="receipt.remarks!=null and receipt.remarks!='' ">
+                comments=#{receipt.remarks},
+            </if>
+            <if test="receipt.compProj!=null and receipt.compProj!='' ">
+                comp_proj=#{receipt.compProj},
+            </if>
+            <if test="receipt.department!=null and receipt.department!='' ">
+                department=#{receipt.department},
+            </if>
+            <if test="receipt.isCertification!=null and receipt.isCertification!='' ">
+                is_certification=#{receipt.isCertification},
+            </if>
+            <if test="receipt.certificationTime!=null">
+                certification_time=#{receipt.certificationTime},
+            </if>
+            <if test="receipt.checkDigit!=null and receipt.checkDigit!='' ">
+                check_digit=#{receipt.checkDigit},
+            </if>
+            <if test="receipt.leviedTotal!=null and receipt.leviedTotal!='' ">
+                levied_total=#{receipt.leviedTotal},
+            </if>
+            <if test="receipt.receiptType!=null and receipt.receiptType!='' ">
+                receipt_type=#{receipt.receiptType},
+            </if>
+            <if test="receipt.voucherNum!=null and receipt.voucherNum!='' ">
+                voucher_num=#{receipt.voucherNum}
+            </if>
+            <if test="receipt.fixedAssets!=null and receipt.fixedAssets!='' ">
+                fixed_assets=#{receipt.fixedAssets}
+            </if>
+        </set>
+        WHERE id=#{receipt.id}
+        AND is_handle='0'
+    </update>
+
+    <select id="selectReapetReceipt" parameterType="java.lang.String" resultMap="receiptResultMap">
+        SELECT
+        <include refid="receiptCommon"/>
+        FROM
+        receipt
+        WHERE is_handle='1'
+        AND receipt_num=#{receiptNum}
+    </select>
+
+    <delete id="delScanReceipt" parameterType="java.lang.Integer">
+        DELETE
+        FROM
+        receipt
+        WHERE
+        id=#{id}
+        AND is_handle='0'
+    </delete>
+
+    <update id="handleScanReceipts" parameterType="Receipt">
+        UPDATE
+        receipt
+        SET
+        submitaccount_staff=#{receipt.submitAccountStaff},
+        comp_proj=#{receipt.compProj},
+        department=#{receipt.department},
+        receipt_code=#{receipt.receiptCode},
+        receipt_num=#{receipt.receiptNum},
+        seller_unit_name=#{receipt.sellerUnitName},
+        receipt_time=#{receipt.receiptTime},
+        receipt_category=#{receipt.receiptCategory},
+        receipt_content=#{receipt.receiptContent},
+        money=#{receipt.money},
+        rate=#{receipt.rate},
+        tax=#{receipt.tax},
+        entry_time=now(),
+        comments=#{receipt.remarks},
+        check_digit=#{receipt.checkDigit},
+        levied_total=#{receipt.leviedTotal},
+        receipt_type=#{receipt.receiptType},
+        <if test="receipt.receiptType==0">
+            is_certification='2',
+        </if>
+        fixed_assets=#{receipt.fixedAssets},
+        handler_user=#{receipt.handlerUser},
+        assert_class_firdir=#{receipt.assertClassFirdir},
+        assert_class_secdir=#{receipt.assertClassSecdir},
+        is_handle='1'
+        WHERE id=#{receipt.id}
+        AND is_handle='0'
+    </update>
+
+    <delete id="delErrorScanReceipt">
+        DELETE
+        FROM
+        receipt
+        WHERE
+        error_code='1'
+    </delete>
+
+    <delete id="delAllTempReceipt">
+        DELETE
+        FROM
+        receipt
+        WHERE
+        is_handle='0'
+    </delete>
+
+    <select id="selectSacnRecById" parameterType="java.lang.Integer" resultMap="receiptResultMap">
+        SELECT
+        <include refid="receiptCommon"/>
+        FROM
+        receipt
+        WHERE is_handle='0'
+        AND id=#{id}
+    </select>
+
+    <select id="selectSubbmitList" resultType="java.lang.String">
+        SELECT DISTINCT submitaccount_staff
+        FROM receipt
+        WHERE
+        is_handle='1'
+        AND submitaccount_staff!=""
+    </select>
+
+    <select id="findAllReceiptNum" resultType="java.lang.String">
+        SELECT
+        DISTINCT receipt_num
+        FROM receipt
+        WHERE
+        is_handle='0'
+    </select>
+</mapper>

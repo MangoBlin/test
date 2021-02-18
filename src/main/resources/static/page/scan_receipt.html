@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>电子发票审核系统</title>
+    <link rel="stylesheet" type="text/css" href="../lib/layer-v3.1.1/layer/theme/default/layer.css"/>
+    <link rel="stylesheet" type="text/css" href="../lib/layui/css/layui.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/scanReceipt.css"/>
+    <link rel="stylesheet" type="text/css" href="../lib/imageFind/viewer.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../lib/lenovoFrame/auto.css"/>
+</head>
+<body onload="myFunction()"  id="bodyId" style="overflow-x: hidden">
+<!--<body id="bodyId" style="overflow-x: hidden">-->
+<div id="myViewer" style="display: none;"></div>
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo" style="font-size: large"><img src="../img/logo3.png" style="width: 25%">&nbsp;电子发票审核系统</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a id="scanReceipt1" style="background-color: #5FB878;display: none">扫描添加</a></li>
+            <li class="layui-nav-item"><a id="receiptManage1">发票管理</a></li>
+            <li class="layui-nav-item"><a onclick="window.open('https://inv-veri.chinatax.gov.cn/')">查验真伪</a></li>
+            <!--<li class="layui-nav-item">-->
+                <!--<a href="javascript:;">系统管理</a>-->
+                <!--<dl class="layui-nav-child">-->
+                    <!--<dd><a href="">用户管理</a></dd>-->
+                    <!--<dd><a href="">角色管理</a></dd>-->
+                <!--</dl>-->
+            <!--</li>-->
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="../img/1.jpg" class="layui-nav-img">
+                    <p style="display: inline" id="loginUser2"></p>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a id="personal2">个人中心</a></dd>
+                    <dd><a id="editPassword" style="cursor:pointer;">修改密码</a></dd>
+                    <dd><a href="../index.html">退出</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+    <div class="layui-row layui-col-space10">
+
+        <div class="layui-col-md12">
+            <div>
+                <form class="layui-form" action="#" style="font-size: smaller;" id="scanForm2" lay-filter="scanFormFilter2">
+                    <div class="layui-form-item">
+                        <div class="layui-inline myformItem4">
+                            <label class="layui-form-label" style="margin-top: 7px">公司/项目</label>
+                            <div class="layui-input-block" style="margin-top: 18px">
+                                <p style="display: inline"><input type="radio" name="compProj" value="公司" lay-ignore >公司</p>
+                                <p style="display: inline"><input type="radio" name="compProj" value="项目" lay-ignore >项目</p>
+                            </div>
+                        </div>
+
+                        <div class="layui-inline myformItem4">
+                            <label class="layui-form-label">部门</label>
+                            <div class="layui-input-block">
+                                <select name="department" id="isSelect">
+                                    <option value="">请选择部门</option>
+                                    <option value="综合部">综合部</option>
+                                    <option value="生产经营部">生产经营部</option>
+                                    <option value="财务部">财务部</option>
+                                    <option value="人力资源部">人力资源部</option>
+                                    <option value="质量信息部">质量信息部</option>
+                                    <option value="战略发展部">战略发展部</option>
+                                    <option value="离退休职工服务部">离退休职工服务部</option>
+                                    <option value="工会">工会</option>
+                                    <option value="岩土工程院">岩土工程院</option>
+                                    <option value="测绘院">测绘院</option>
+                                    <option value="工程勘察院">工程勘察院</option>
+                                    <option value="数字工程中心">数字工程中心</option>
+                                    <option value="监测中心">监测中心</option>
+                                    <option value="计算出版中心">计算出版中心</option>
+                                    <option value="许昌分公司">许昌分公司</option>
+                                    <option value="河南省山水水利工程有限公司">河南省山水水利工程有限公司</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="layui-inline myformItem4">
+                            <label class="layui-form-label">报销人员</label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="isSubmitaccountStaff" name="submitaccountStaff" placeholder="请输入报销人员" autocomplete="off" class="layui-input">
+                                <div id="auto" style="position: absolute;background-color: #9F9F9F;z-index:999;border: 1px solid #dcdcdc"></div>
+                            </div>
+                        </div>
+
+                        <div class="layui-inline myformItem4" style="float: right;margin-right: 200px">
+                            <i id="loadingId" class="layui-icon layui-icon-loading layui-anim layui-anim-rotate layui-anim-loop" style="display: none;font-size: x-large"></i>
+                            <button class="layui-btn" stype="on" id="scanOver" >开始扫描</button>
+                            <button class="layui-btn layui-btn-primary" id="uploadReceipts">上传</button>
+                        </div>
+
+                    </div>
+
+                </form>
+            </div>
+            <hr style="margin: 0">
+        </div>
+        <div class="layui-col-md4">
+            <script type="text/html" id="barDemo">
+                <i class="layui-icon"><a lay-event="selectImg">&#xe64a;</a></i>
+            </script>
+            <div style="margin-left: 50px;">
+                <table id="scanReceipt" class="layui-disabled" lay-filter="scanReceiptFilter" style="font-size: small;"></table>
+            </div>
+
+        </div>
+        <div class="layui-col-md8">
+            <div id="scanReceiptMsg2" style="margin-right: 30px;display: none;margin-left: 50px;margin-top: 10px;border: 1px solid #dcdcdc;border-radius: 10px;height: 300px">
+                <h2 style="color: red;margin-left: 30px;margin-top: 30px">1.点击"开始扫描"按钮</h2>
+                <br>
+                <h2 style="color: red;margin-left: 30px;margin-top: 10px">2.将发票正面朝下放入扫描仪中，按下"scan"键，开始扫描</h2>
+                <br>
+                <h2 style="color: red;margin-left: 30px;margin-top: 10px">3.完成发票扫描后,等待3到5秒,待所有发票显示在左侧表格中后,点击"扫描完成"按钮</h2>
+                <br>
+                <h2 style="color: red;margin-left: 30px;margin-top: 10px">4.点击左侧表格中的发票,查看信息是否正确</h2>
+            </div>
+
+            <div id="scanReceiptMsg1" style="margin-right: 30px;display: none;margin-left: 50px;margin-top: 10px;border: 1px solid #dcdcdc;border-radius: 10px">
+
+                <h1 style="color: red;margin-left: 30px;margin-top: 8px" id="errorMsg"></h1>
+                <hr/>
+
+                <form class="layui-form" action="#" style="font-size: smaller;" id="scanForm1" lay-filter="scanFormFilter">
+                    <div class="layui-form-item">
+                        <div class="layui-inline myformItem3">
+                            <label class="layui-form-label">发票代码</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="receiptCode"  autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-inline myformItem3">
+                            <label class="layui-form-label">发票号码</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="receiptNum" required  lay-verify="required" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-inline myformItem3">
+                            <label class="layui-form-label">销售方名称</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="sellerUnitName" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-inline myformItem3">
+                            <label class="layui-form-label">开票日期</label>
+                                <div class="layui-input-inline">
+                            <input type="text" name="receiptTime" autoComplete="off" class="layui-input" id="scanDate1">
+                            </div>
+                        </div>
+
+                        <div class="layui-inline myformItem3">
+                            <label class="layui-form-label">校验码(后六位)</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="checkDigit" autoComplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-inline myformItem3">
+                            <label class="layui-form-label">发票类别</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="receiptCategory" autoComplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-inline myformItem3">
+                            <label class="layui-form-label">发票内容</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="receiptContent" autoComplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-inline myformItem3">
+                            <label class="layui-form-label">金额</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="money" autoComplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-inline myformItem3">
+                            <label class="layui-form-label">税率</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="rate" autoComplete="off" class="layui-input">
+                            </div>
+                        </div>
+
+
+                        <div class="layui-inline myformItem3">
+                            <label class="layui-form-label">税额</label>
+                            <div class="layui-input-inline">
+                               <input type="text" name="tax" autoComplete="off" class="layui-input">
+                           </div>
+                        </div>
+
+                        <div class="layui-inline myformItem3">
+                            <label class="layui-form-label">价税合计</label>
+                            <div class="layui-input-inline">
+                               <input type="text" name="leviedTotal" autoComplete="off" class="layui-input">
+                           </div>
+                        </div>
+
+                        <div class="layui-inline myformItem3">
+                            <label class="layui-form-label">发票类型</label>
+                            <div class="layui-input-block" style="margin-top: 10px">
+                                <p style="display: inline"><input type="radio" name="receiptType" value="1" lay-ignore>普票</p>
+                                <p style="display: inline"><input type="radio" name="receiptType" value="0" lay-ignore>专票</p>
+                            </div>
+                        </div>
+
+                        <div class="layui-inline myformItem3">
+                            <label class="layui-form-label">固定资产</label>
+                            <div class="layui-input-block">
+                                <select name="fixedAssets" id="fixedAssets"  lay-filter="fixedAssetsSelect">
+                                    <option value="0">非固定资产</option>
+                                    <option value="1">固定资产</option>
+                                    <option value="2">无形资产</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="layui-inline myformItem3 fixAssertClass" style="display: none">
+                            <label class="layui-form-label">资产分类</label>
+                            <div class="layui-input-block">
+                                <input type="text" id="tree" name="fixAssertClass" lay-filter="tree" class="layui-input">
+                            </div>
+                        </div>
+
+                        <div class="layui-inline myformItem3 IntangibleAssetClass" style="display: none">
+                            <label class="layui-form-label">无形资产分类</label>
+                            <div class="layui-input-block">
+                                <select name="IntangibleAssetClass" id="IntangibleAssetClassId">
+                                    <option value=""></option>
+                                    <option value="技术软件">技术软件</option>
+                                    <option value="研发技术软件">研发技术软件</option>
+                                    <option value="专利">专利</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="layui-inline myformItem3">
+                            <label class="layui-form-label">备注</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="remarks" autoComplete="off" class="layui-input">
+                           </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <div class="layui-input-block" style="float: right;margin-right: 50px;margin-top: 15px">
+                            <!--<button class="layui-btn" lay-submit lay-filter="submitScanFormFilter">保存</button>-->
+                            <button class="layui-btn layui-btn-danger" id="delScanReceipt">删除</button>
+                        </div>
+                    </div>
+
+                    <hr>
+                    <div style="margin-left: 20px;margin-top: 5px;font-size: 20px"><h3 style="color: red">确认所有发票无误后,点击上传按钮(重复发票会自动删除,其他发票则会自动录入)，上传完成后可以在发票管理页面进行查看。</h3></div>
+                </form>
+
+                <div id="scanTable1">
+                    <p style="margin-top: 10px;margin-bottom: 10px;margin-left: 30px">发票信息保存失败,该发票已经报销过,报销信息如下:</p>
+                    <table class="layui-table" lay-skin="line" style="width: 300px;margin-left: 100px" id="scanReceipt2">
+                        <colgroup>
+                            <col width="150">
+                            <col width="250">
+                        </colgroup>
+                        <tbody>
+                        <tr>
+                            <td>报销人</td>
+                            <td id="tb1"></td>
+                        </tr>
+                        <tr>
+                            <td>发票代码</td>
+                            <td id="tb2"></td>
+                        </tr>
+                        <tr>
+                            <td>发票号码</td>
+                            <td id="tb3"></td>
+                        </tr>
+                        <tr>
+                            <td>销售方名称</td>
+                            <td id="tb4"></td>
+                        </tr>
+                        <tr>
+                            <td>开票日期</td>
+                            <td id="tb5"></td>
+                        </tr>
+                        <tr>
+                            <td>金额</td>
+                            <td id="tb6"></td>
+                        </tr>
+                        <tr>
+                            <td>录入时间</td>
+                            <td id="tb7"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button class="layui-btn layui-btn-danger" id="delScanReceipt2" style="float: right;margin-bottom: 6px;margin-right: 200px">删除</button>
+                    <hr>
+
+                    <div style="margin-left: 20px;margin-top: 5px;font-size: 16px"><h3 style="color: red">确认所有发票无误后,点击上传按钮(重复发票会自动删除,其他发票则会自动录入)，上传完成后可以在发票管理页面进行查看。</h3></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script src="../lib/jquery-3.4.1/jquery-3.4.1.js" type="text/javascript" charset="UTF-8"></script>
+<script src="../lib/layer-v3.1.1/layer/layer.js" type="text/javascript" charset="UTF-8"></script>
+<script src="../lib/layui/layui.js" type="text/javascript" charset="UTF-8"></script>
+<script src="../js/element.js" type="text/javascript" charset="UTF-8"></script>
+<script src="../js/updatePassword.js" type="text/javascript" charset="UTF-8"></script>
+<script src="../lib/lenovoFrame/auto.js" type="text/javascript" charset="UTF-8"></script>
+<script src="../treeselect1/module/common.js"></script>
+<script src="../js/scanReceipt.js" type="text/javascript" charset="UTF-8"></script>
+<script src="../lib/imageFind/viewer.min.js" type="text/javascript" charset="UTF-8"></script>
+

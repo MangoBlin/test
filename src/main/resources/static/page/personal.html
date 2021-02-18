@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>电子发票审核系统</title>
+    <link rel="stylesheet" type="text/css" href="../lib/layer-v3.1.1/layer/theme/default/layer.css"/>
+    <link rel="stylesheet" type="text/css" href="../lib/layui/css/layui.css"/>
+</head>
+<body style="overflow-x: hidden">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <div class="layui-logo" style="font-size: large"><img src="../img/logo3.png" style="width: 25%">&nbsp;电子发票审核系统</div>
+            <!-- 头部区域（可配合layui已有的水平导航） -->
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item"><a id="scanReceipt1" style="display: none">扫描添加</a></li>
+                <li class="layui-nav-item"><a id="receiptManage1">发票管理</a></li>
+                <!--<li class="layui-nav-item"><a href="https://inv-veri.chinatax.gov.cn/">查验真伪</a></li>-->
+                <li class="layui-nav-item"><a onclick="window.open('https://inv-veri.chinatax.gov.cn/')">查验真伪</a></li>
+
+                <!--<li class="layui-nav-item">-->
+                    <!--<a href="javascript:;">系统管理</a>-->
+                    <!--<dl class="layui-nav-child">-->
+                        <!--<dd><a href="">用户管理</a></dd>-->
+                        <!--<dd><a href="">角色管理</a></dd>-->
+                    <!--</dl>-->
+                <!--</li>-->
+            </ul>
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <img src="../img/1.jpg" class="layui-nav-img">
+                        <p style="display: inline" id="loginUser2"></p>
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a id="personal2">个人中心</a></dd>
+                        <dd><a id="editPassword" style="cursor:pointer;">修改密码</a></dd>
+                        <dd><a href="../index.html">退出</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+
+
+        <hr class="layui-bg-green">
+
+        <div class="layui-row layui-col-space10">
+            <div class="layui-col-md4">
+
+            </div>
+            <div class="layui-col-md4" style="align-items: center">
+
+                <form class="layui-form" action="" id="myForm3" lay-submit lay-filter="saveForm">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">手机号码</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="phone" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">姓名</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="name" required lay-verify="required" placeholder="请输入姓名" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <!--<div class="layui-form-item">-->
+                        <!--<label class="layui-form-label">密码</label>-->
+                        <!--<div class="layui-input-inline">-->
+                            <!--<input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">性别</label>
+                        <div class="layui-input-block">
+                            <select name="sex" lay-verify="">
+                                <option value=""></option>
+                                <option value="0">女</option>
+                                <option value="1">男</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">所在部门</label>
+                        <div class="layui-input-block">
+                            <select name="userDept" lay-verify="required">
+                                <option value=""></option>
+                                <option value="综合部">综合部</option>
+                                <option value="生产经营部">生产经营部</option>
+                                <option value="财务部">财务部</option>
+                                <option value="人力资源部">人力资源部</option>
+                                <option value="质量信息部">质量信息部</option>
+                                <option value="战略发展部">战略发展部</option>
+                                <option value="离退休职工服务部">离退休职工服务部</option>
+                                <option value="工会">工会</option>
+                                <option value="岩土工程院">岩土工程院</option>
+                                <option value="测绘院">测绘院</option>
+                                <option value="工程勘察院">工程勘察院</option>
+                                <option value="数字工程中心">数字工程中心</option>
+                                <option value="监测中心">监测中心</option>
+                                <option value="计算出版中心">计算出版中心</option>
+                                <option value="许昌分公司">许昌分公司</option>
+                                <option value="河南省山水水利工程有限公司">河南省山水水利工程有限公司</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">角色</label>
+                        <div class="layui-input-block">
+                            <select name="role" lay-verify="required">
+                                <option value=""></option>
+                                <option value="1">管理员</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">用户状态</label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" name="userStatus" lay-skin="switch" lay-text="启用|禁用">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn" lay-submit lay-filter="saveUser">保存</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="layui-col-md4">
+
+            </div>
+        </div>
+
+
+
+    </div>
+</body>
+
+<script src="../lib/jquery-3.4.1/jquery-3.4.1.js" type="text/javascript" charset="UTF-8"></script>
+<script src="../lib/layer-v3.1.1/layer/layer.js" type="text/javascript" charset="UTF-8"></script>
+<script src="../lib/layui/layui.js" type="text/javascript" charset="UTF-8"></script>
+<script src="../js/element.js" type="text/javascript" charset="UTF-8"></script>
+<script src="../js/updatePassword.js" type="text/javascript" charset="UTF-8"></script>
+<script src="../js/personal.js" type="text/javascript" charset="UTF-8"></script>

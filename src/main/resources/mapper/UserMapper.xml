@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hbw.springbootapplication.mapper.UserMapper">
+    <resultMap id="userResultMap" type="User">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="phone" column="phone"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="sex" column="sex"/>
+        <result property="userDept" column="user_dept"/>
+        <result property="role" column="role"/>
+        <result property="userStatus" column="user_status"/>
+    </resultMap>
+
+    <select id="selectUsername" parameterType="java.lang.String" resultMap="userResultMap">
+        SELECT * FROM user
+        WHERE
+        username=#{username}
+    </select>
+
+    <select id="selectPassword" parameterType="User" resultType="User">
+        SELECT * FROM user
+        WHERE
+        username=#{user.username}
+        AND
+        password=#{user.password}
+    </select>
+
+    <update id="updateUser" parameterType="User">
+        UPDATE user
+        SET
+        phone=#{tempUser.phone},
+        name=#{tempUser.name},
+        sex=#{tempUser.sex},
+        user_dept=#{tempUser.userDept},
+        role=#{tempUser.role},
+        user_status=#{tempUser.userStatus}
+        WHERE
+        username=#{tempUser.username}
+    </update>
+
+    <update id="updatePassword" parameterType="User">
+        UPDATE user
+        SET
+        password=#{tempUser.password}
+        WHERE
+        username=#{tempUser.username}
+    </update>
+</mapper>
